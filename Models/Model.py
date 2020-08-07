@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 class Model:
 
     def __init__(self):
-        con = sqlite3.connect('../profilSoftwareDF.db')
+        con = sqlite3.connect('profilSoftwareDF.db')
         con.row_factory = sqlite3.Row
         cur = con.cursor()
         self.cur = cur
