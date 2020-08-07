@@ -1,5 +1,6 @@
 from Models.Users import Users
 from Models.Location import Location
+from Models.Account import Account
 
 
 # procent kobiet i mężczyzn
@@ -29,6 +30,16 @@ def most_popular_cities(quantity):
     count = 1
     for item in list:
         print(str(count) + ". " + item['city'] + " = " + str(item['count(city)']))
+        count += 1
+
+
+#N najpopularniejszych haseł w formacie
+def most_popular_pass(quantity):
+    account_modal = Account()
+    list = account_modal.get_passwords(quantity)
+    count = 1
+    for item in list:
+        print(str(count) + ". " + item['password'] + " = " + str(item['count(password)']))
         count += 1
 
 
