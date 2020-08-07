@@ -16,6 +16,7 @@ class Model:
         self.con.commit()
         self.cur.close()
 
+# zadanie liczba dni pozostałych do urodzin danej osoby
     def calculate_days_to_birth(self, date):
         now = datetime.now()
         birth = datetime(now.year, date.month, date.day, date.hour, date.minute, date.second, date.microsecond)
@@ -24,6 +25,7 @@ class Model:
 
         return (birth - now).days + 1
 
+# zadanie oczyść numer telefonu ze znaków specjalnych (powinny zostać same cyfry)
     def clear_cell_phone_number(self, number):
         chars = "()- "
         for c in chars:
