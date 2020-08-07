@@ -2,7 +2,7 @@ from Models.AddJSON import AddJSON
 import ReadJsonFile
 import argparse
 
-parser = argparse.ArgumentParser(description='Controller ')
+parser = argparse.ArgumentParser(description='Main Controller')
 parser.add_argument('--installfromFile', help="Insert Values to DataBase from JSON file", action='store_true')
 args = parser.parse_args()
 
