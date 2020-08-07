@@ -30,4 +30,5 @@ class AddJSON(Model):
                               row['dob']['age'],
                               self.clear_cell_phone_number(row['phone']), self.clear_cell_phone_number(row['cell']),
                               row['id']['name'], row['id']['value'], row['nat'], last_account_id, last_location_id))
-            self.commit()
+
+        self.commit()
