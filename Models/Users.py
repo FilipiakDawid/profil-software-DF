@@ -22,3 +22,17 @@ class Users(Model):
         res['male'] = male[0]['COUNT']
         self.commit()
         return res
+
+    def avg_age(self):
+        res = {}
+        self.cur.execute('SELECT AVG(age) as AVG FROM users')
+        all = self.cur.fetchall()
+        res['all'] = all[0]['AVG']
+        self.cur.execute("SELECT AVG(age) as AVG FROM users WHERE gender = 'male'")
+        male = self.cur.fetchall()
+        res['male'] = male[0]['AVG']
+        self.cur.execute("SELECT AVG(age) as AVG FROM users WHERE gender = 'female'")
+        female = self.cur.fetchall()
+        res['female'] = female[0]['AVG']
+        self.commit()
+        return res
