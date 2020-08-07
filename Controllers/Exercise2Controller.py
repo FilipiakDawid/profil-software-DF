@@ -1,4 +1,5 @@
 from Models.Users import Users
+from Models.Location import Location
 
 
 # procent kobiet i mężczyzn
@@ -19,3 +20,15 @@ def male_female_avg_age():
     list = user_model.avg_age()
     for key, value in list.items():
         print("AVG age for: " + key + " -> " + str(round(value)))
+
+
+# N najbardziej popularnych miast
+def most_popular_cities(quantity):
+    location_modal = Location()
+    list = location_modal.get_cities(quantity)
+    count = 1
+    for item in list:
+        print(str(count) + ". " + item['city'] + " = " + str(item['count(city)']))
+        count += 1
+
+
