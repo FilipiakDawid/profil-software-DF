@@ -2,6 +2,7 @@ from Models.Users import Users
 from Models.Location import Location
 from Models.Account import Account
 from datetime import datetime
+import re
 
 
 # procent kobiet i mężczyzn
@@ -65,4 +66,44 @@ def users_between_birth_date(start_date, end_date):
         print("This is the incorrect date string format. It should be YYYY-MM-DD")
 
 
+# najbezpieczniejsze hasło
+def calculate_pass_strength(password) -> int:
+    points = 0
+
+    if any(x.isupper() for x in password):
+        points += 2
+
+    if any(x.islower() for x in password):
+        points += 1
+
+    if any(x.isdigit() for x in password):
+        points += 1
+
+    if len(password) >= 8:
+        points += 5
+
+    if re.findall('[^A-Za-z0-9]', password):
+        points += 3
+
+    return points
+
+
+def safest_users_passwords():
+    account_modal = Account()
+    list = account_modal.get_all_passwords()
+    max_points = -1
+    password_list = []
+
+    for item in list:
+        tmp_points = calculate_pass_strength(item['password'])
+
+        if tmp_points > max_points:
+            password_list.clear()
+            max_points = tmp_points
+            password_list.append(item['password'])
+        elif tmp_points == max_points:
+            password_list.append(item['password'])
+
+    print("The strongest password (s) (strength " + str(max_points) + ") is:")
+    print(str(password_list))
 

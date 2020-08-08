@@ -8,3 +8,9 @@ class Account(Model):
         res = self.cur.fetchall()
         self.commit()
         return res
+
+    def get_all_passwords(self):
+        self.cur.execute('SELECT password FROM account')
+        res = self.cur.fetchall()
+        self.commit()
+        return res
