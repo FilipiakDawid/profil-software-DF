@@ -36,3 +36,11 @@ class Users(Model):
         res['female'] = female[0]['AVG']
         self.commit()
         return res
+
+    def get_users_between_birth_date(self, start_date, end_date):
+        self.cur.execute('SELECT birth_date , title , first_name , last_name FROM users WHERE birth_date BETWEEN  ? '
+                         'AND ? order by birth_date;', (start_date, end_date))
+        res = self.cur.fetchall()
+        self.commit()
+
+        return res

@@ -1,6 +1,7 @@
 from Models.Users import Users
 from Models.Location import Location
 from Models.Account import Account
+from datetime import datetime
 
 
 # procent kobiet i mężczyzn
@@ -33,7 +34,7 @@ def most_popular_cities(quantity):
         count += 1
 
 
-#N najpopularniejszych haseł w formacie
+# N najpopularniejszych haseł w formacie
 def most_popular_pass(quantity):
     account_modal = Account()
     list = account_modal.get_passwords(quantity)
@@ -41,5 +42,27 @@ def most_popular_pass(quantity):
     for item in list:
         print(str(count) + ". " + item['password'] + " = " + str(item['count(password)']))
         count += 1
+
+
+# wszystkich użytkowników którzy urodzili się w zakresie dat podanym jako parametr
+def users_between_birth_date(start_date, end_date):
+    format = "%Y-%m-%d"
+
+    try:
+
+        date_start_object = datetime.strptime(start_date, format)
+        date_end_object = datetime.strptime(end_date, format)
+        user_model = Users()
+        list = user_model.get_users_between_birth_date(date_start_object, date_end_object)
+        count = 1
+        print("From " + start_date + " to " + end_date)
+        for item in list:
+            print(str(count) + ". " + item['title'] + " " + item['first_name'] + " " + item['last_name']
+                  + ": " + item['birth_date'].split(" ")[0])
+            count += 1
+
+    except ValueError:
+        print("This is the incorrect date string format. It should be YYYY-MM-DD")
+
 
 
