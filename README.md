@@ -1,7 +1,6 @@
 # Profil Software zadanie rekrutacyjne:
 
-1.Po pobraniu repozytorium nalezy zainstalowac 2 dodatkowe moduły (python-dateutil,requests) Nalezy uzyć komend:
-
+1.Po pobraniu repozytorium należy zainstalować 2 dodatkowe moduły (python-dateutil,requests) należy użyć komend:
 ```sh
 pip install requests
 pip install python-dateutil
@@ -26,7 +25,7 @@ Dla `--insertdata API` pobieramy dane z zewnętrznego serwera, dla `--insertdata
 
 ### Spis komend dla zadania drugiego
 
-Aby zobaczyc listę dostępnych komend wpisujemy:
+Aby zobaczyć listę dostępnych komend wpisujemy:
 ```sh
 python -m Controllers.Exercise2Controller --h
 ```
@@ -85,14 +84,14 @@ python -m Controllers.Exercise2Controller --safestpass
 
 ----
 
-Aby wyczyścic bazę danych wystarczy zainstalować ją jeszcze raz:
+Aby wyczyścić bazę danych wystarczy zainstalować ją jeszcze raz:
 ```sh
 python DataBaseInstaller.py
 ```
 ----
 #### Testy Jednostkowe
 
-Sprawdzanie poprawności plików JSON (lokalny plik oraz z zewnetrznego serwera)
+Sprawdzanie poprawności plików JSON (lokalny plik oraz z zewnętrznego serwera)
 ```sh
 python -m  UnitTests.test_ReadJsonFile
 ```
