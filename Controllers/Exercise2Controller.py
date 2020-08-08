@@ -1,8 +1,13 @@
-from Models.Users import Users
-from Models.Location import Location
-from Models.Account import Account
-from datetime import datetime
+import argparse
 import re
+from datetime import datetime
+
+from Models.Account import Account
+from Models.Location import Location
+from Models.Users import Users
+
+parser = argparse.ArgumentParser(description='Exercise 2 Controller')
+parser.add_argument('--malefemaleprecent', help="Return percentage of women and men", action='store_true')
 
 
 # procent kobiet i mężczyzn
@@ -18,14 +23,22 @@ def male_female_percentage():
 
 
 # średnia wieku
-def male_female_avg_age():
+
+parser.add_argument('--avgage', help="Return average of women or men", type=str, choices=['all', 'male', 'female'])
+
+
+def male_female_avg_age(choice):
     user_model = Users()
-    list = user_model.avg_age()
+    list = user_model.avg_age(choice)
     for key, value in list.items():
         print("AVG age for: " + key + " -> " + str(round(value)))
 
 
 # N najbardziej popularnych miast
+
+parser.add_argument('--popularcities', help="Return most popular cities", type=int)
+
+
 def most_popular_cities(quantity):
     location_modal = Location()
     list = location_modal.get_cities(quantity)
@@ -36,6 +49,10 @@ def most_popular_cities(quantity):
 
 
 # N najpopularniejszych haseł w formacie
+
+parser.add_argument('--popularpassword', help="Return most popular password (s)", type=int)
+
+
 def most_popular_pass(quantity):
     account_modal = Account()
     list = account_modal.get_passwords(quantity)
@@ -46,6 +63,9 @@ def most_popular_pass(quantity):
 
 
 # wszystkich użytkowników którzy urodzili się w zakresie dat podanym jako parametr
+
+parser.add_argument('--birthdate', help="Return users born in the date range", nargs=2, type=str)
+
 def users_between_birth_date(start_date, end_date):
     format = "%Y-%m-%d"
 
@@ -88,6 +108,9 @@ def calculate_pass_strength(password) -> int:
     return points
 
 
+parser.add_argument('--safestpass', help="Return the safest password", action='store_true')
+
+
 def safest_users_passwords():
     account_modal = Account()
     list = account_modal.get_all_passwords()
@@ -104,6 +127,23 @@ def safest_users_passwords():
         elif tmp_points == max_points:
             password_list.append(item['password'])
 
-    print("The strongest password (s) (strength " + str(max_points) + ") is:")
+    print("The safest password (s) (strength " + str(max_points) + ") is:")
     print(str(password_list))
 
+
+args = parser.parse_args()
+# argparse
+if args.malefemaleprecent:
+    male_female_percentage()
+elif args.avgage:
+    male_female_avg_age(args.avgage)
+elif args.popularcities:
+    most_popular_cities(args.popularcities)
+elif args.popularpassword:
+    most_popular_pass(args.popularpassword)
+elif args.birthdate:
+    users_between_birth_date(args.birthdate[0], args.birthdate[1])
+elif args.safestpass:
+    safest_users_passwords()
+else:
+    print(parser.print_help())
