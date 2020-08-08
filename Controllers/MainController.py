@@ -21,7 +21,11 @@ def add_json_file(choice):
         print("Problem with reading the file from: " + choice)
 
 
-if args.insertdata:
-    add_json_file(args.insertdata)
-else:
-    print(parser.print_help())
+try:
+    if args.insertdata:
+        add_json_file(args.insertdata)
+    else:
+        print(parser.print_help())
+except BaseException as err:
+    print(err)
+

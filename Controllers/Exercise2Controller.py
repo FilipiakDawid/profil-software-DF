@@ -10,16 +10,23 @@ parser = argparse.ArgumentParser(description='Exercise 2 Controller')
 parser.add_argument('--malefemaleprecent', help="Return percentage of women and men", action='store_true')
 
 
+def check_values(list):
+    if len(list) == 0 or None:
+        raise BaseException("Empty Database")
+
+
 # procent kobiet i mężczyzn
 def male_female_percentage():
     user_model = Users()
     list = user_model.count_male_female()
     sum = list['male'] + list['female']
+
     if sum != 0:
         male_precent = list['male'] / sum * 100
-        print("Male Percent:" + str(male_precent) + "% Female Percent:" + str(100 - male_precent) + " %")
+        print("Male Percent:" + str(round(male_precent, 2)) + "% Female Percent:" +
+              str(round(100 - male_precent, 2)) + " %")
     else:
-        print("Empty Database")
+        raise BaseException("Empty Database")
 
 
 # średnia wieku
@@ -30,8 +37,9 @@ parser.add_argument('--avgage', help="Return average of women or men", type=str,
 def male_female_avg_age(choice):
     user_model = Users()
     list = user_model.avg_age(choice)
-    for key, value in list.items():
-        print("AVG age for: " + key + " -> " + str(round(value)))
+    check_values(list)
+    for value in list:
+        print("AVG age for: " + choice + " -> " + str(round(value)))
 
 
 # N najbardziej popularnych miast
@@ -42,6 +50,8 @@ parser.add_argument('--popularcities', help="Return most popular cities", type=i
 def most_popular_cities(quantity):
     location_modal = Location()
     list = location_modal.get_cities(quantity)
+    check_values(list)
+
     count = 1
     for item in list:
         print(str(count) + ". " + item['city'] + " = " + str(item['count(city)']))
@@ -56,6 +66,8 @@ parser.add_argument('--popularpassword', help="Return most popular password (s)"
 def most_popular_pass(quantity):
     account_modal = Account()
     list = account_modal.get_passwords(quantity)
+    check_values(list)
+
     count = 1
     for item in list:
         print(str(count) + ". " + item['password'] + " = " + str(item['count(password)']))
@@ -66,6 +78,7 @@ def most_popular_pass(quantity):
 
 parser.add_argument('--birthdate', help="Return users born in the date range", nargs=2, type=str)
 
+
 def users_between_birth_date(start_date, end_date):
     format = "%Y-%m-%d"
 
@@ -75,6 +88,7 @@ def users_between_birth_date(start_date, end_date):
         date_end_object = datetime.strptime(end_date, format)
         user_model = Users()
         list = user_model.get_users_between_birth_date(date_start_object, date_end_object)
+        check_values(list)
         count = 1
         print("From " + start_date + " to " + end_date)
         for item in list:
@@ -114,6 +128,7 @@ parser.add_argument('--safestpass', help="Return the safest password", action='s
 def safest_users_passwords():
     account_modal = Account()
     list = account_modal.get_all_passwords()
+    check_values(list)
     max_points = -1
     password_list = []
 
@@ -133,17 +148,20 @@ def safest_users_passwords():
 
 args = parser.parse_args()
 # argparse
-if args.malefemaleprecent:
-    male_female_percentage()
-elif args.avgage:
-    male_female_avg_age(args.avgage)
-elif args.popularcities:
-    most_popular_cities(args.popularcities)
-elif args.popularpassword:
-    most_popular_pass(args.popularpassword)
-elif args.birthdate:
-    users_between_birth_date(args.birthdate[0], args.birthdate[1])
-elif args.safestpass:
-    safest_users_passwords()
-else:
-    print(parser.print_help())
+try:
+    if args.malefemaleprecent:
+        male_female_percentage()
+    elif args.avgage:
+        male_female_avg_age(args.avgage)
+    elif args.popularcities:
+        most_popular_cities(args.popularcities)
+    elif args.popularpassword:
+        most_popular_pass(args.popularpassword)
+    elif args.birthdate:
+        users_between_birth_date(args.birthdate[0], args.birthdate[1])
+    elif args.safestpass:
+        safest_users_passwords()
+    else:
+        print(parser.print_help())
+except BaseException as err:
+    print(err)
