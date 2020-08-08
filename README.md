@@ -89,3 +89,14 @@ Aby wyczyścic bazę danych wystarczy zainstalować ją jeszcze raz:
 ```sh
 python DataBaseInstaller.py
 ```
+----
+#### Testy Jednostkowe
+
+Sprawdzanie poprawności plików JSON (lokalny plik oraz z zewnetrznego serwera)
+```sh
+python -m  UnitTests.test_ReadJsonFile
+```
+Sprawdzanie czy plik bazy danych istnieje
+```sh
+python -m  UnitTests.test_DataBase
+```

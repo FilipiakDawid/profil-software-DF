@@ -47,6 +47,6 @@ class Users(Model):
         self.cur.execute('SELECT birth_date , title , first_name , last_name FROM users WHERE birth_date BETWEEN  ? '
                          'AND ? order by birth_date;', (start_date, end_date))
         res = self.cur.fetchall()
-        self.commit()
 
+        self.commit()
         return res

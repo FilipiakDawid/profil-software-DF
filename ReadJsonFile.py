@@ -12,7 +12,8 @@ def read_file_local(file):
         return None
 
 
-def read_file_from_api(url):
+def read_file_from_api(url, results=1):
+    url = url + "?results=" + str(results)
     response = requests.request("GET", url)
     if response.status_code != 200:
         print("Something goes wrong, please try again response code(" + str(response.status_code) + ")")

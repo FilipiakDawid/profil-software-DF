@@ -11,7 +11,7 @@ def add_json_file(choice):
     if choice == 'Local':
         file = ReadJsonFile.read_file_local("persons.json")
     else:
-        file = ReadJsonFile.read_file_from_api("https://randomuser.me/api/?results=25")
+        file = ReadJsonFile.read_file_from_api("https://randomuser.me/api/", '25')
 
     if file is not None:
         json_model = AddJSON()
